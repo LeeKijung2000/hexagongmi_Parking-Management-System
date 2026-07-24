@@ -1,0 +1,122 @@
+--------------------------------------------------------
+-- 1. 정기권차량정보 (ticket_tbl_01)
+--------------------------------------------------------
+-- 시퀀스 생성
+CREATE SEQUENCE seq_ticket_tno
+    START WITH 1
+    INCREMENT BY 1
+    MAXVALUE 999999
+    NOCACHE
+    NOCYCLE;
+
+-- 테이블 생성
+CREATE TABLE ticket_tbl_01 (
+    tno       NUMBER(6) NOT NULL PRIMARY KEY,
+    carno     VARCHAR2(10),
+    phone     VARCHAR2(13),
+    grade     VARCHAR2(1),
+    tstat     VARCHAR2(1),
+    startdate DATE,
+    enddate   DATE
+);
+
+-- 주석(Comment) 추가
+COMMENT ON TABLE ticket_tbl_01 IS '정기권차량정보';
+COMMENT ON COLUMN ticket_tbl_01.tno IS '정기주차권번호';
+COMMENT ON COLUMN ticket_tbl_01.carno IS '차량번호';
+COMMENT ON COLUMN ticket_tbl_01.phone IS '차주전화';
+COMMENT ON COLUMN ticket_tbl_01.grade IS '주차증급 (M:월주차, Y:년주차,D: 일주차)';
+COMMENT ON COLUMN ticket_tbl_01.tstat IS '정기권상태 (Y:주차가능, N:주차불가능)';
+COMMENT ON COLUMN ticket_tbl_01.startdate IS '입고가입일자';
+COMMENT ON COLUMN ticket_tbl_01.enddate IS '출고마감일자';
+
+
+--------------------------------------------------------
+-- 2. 주차 입출고 내역 (park_info_tbl)
+--------------------------------------------------------
+-- 시퀀스 생성
+CREATE SEQUENCE seq_park_info_parkno
+    START WITH 1
+    INCREMENT BY 1
+    MAXVALUE 999999
+    NOCACHE
+    NOCYCLE;
+
+-- 테이블 생성
+CREATE TABLE park_info_tbl (
+    parkno  NUMBER(6) NOT NULL PRIMARY KEY,
+    carno   VARCHAR2(10),
+    grade   VARCHAR2(1),
+    tstat   VARCHAR2(1),
+    indate  DATE,
+    outdate DATE
+);
+
+-- 주석(Comment) 추가
+COMMENT ON TABLE park_info_tbl IS '주차 입출고 내역';
+COMMENT ON COLUMN park_info_tbl.parkno IS '주차번호';
+COMMENT ON COLUMN park_info_tbl.carno IS '차량번호';
+COMMENT ON COLUMN park_info_tbl.grade IS '주차등급 (M:월, Y:년,D: 일)';
+COMMENT ON COLUMN park_info_tbl.tstat IS '정기권상태 (I:입고, O:출고)';
+COMMENT ON COLUMN park_info_tbl.indate IS '입고일자시간';
+COMMENT ON COLUMN park_info_tbl.outdate IS '출고일자시간';
+
+
+
+
+
+
+
+-- 1. TICKET_TBL_01 샘플 데이터 INSERT
+INSERT INTO ticket_tbl_01 (tno, carno, phone, grade, tstat, startdate, enddate) 
+VALUES (1, '12가1234', '010-2222-4444', 'M', 'Y', TO_DATE('2026-04-01', 'YYYY-MM-DD'), TO_DATE('2026-04-30', 'YYYY-MM-DD'));
+
+INSERT INTO ticket_tbl_01 (tno, carno, phone, grade, tstat, startdate, enddate) 
+VALUES (2, '12가1234', '010-2222-4444', 'M', 'Y', TO_DATE('2026-04-01', 'YYYY-MM-DD'), TO_DATE('2026-04-30', 'YYYY-MM-DD'));
+
+INSERT INTO ticket_tbl_01 (tno, carno, phone, grade, tstat, startdate, enddate) 
+VALUES (3, '13가5534', '010-1234-4444', 'M', 'Y', TO_DATE('2026-07-24', 'YYYY-MM-DD'), TO_DATE('2027-07-24', 'YYYY-MM-DD'));
+
+INSERT INTO ticket_tbl_01 (tno, carno, phone, grade, tstat, startdate, enddate) 
+VALUES (4, '14가5534', '010-1234-4444', 'Y', 'Y', TO_DATE('2026-07-24', 'YYYY-MM-DD'), TO_DATE('2027-07-24', 'YYYY-MM-DD'));
+
+INSERT INTO ticket_tbl_01 (tno, carno, phone, grade, tstat, startdate, enddate) 
+VALUES (5, '15가6534', '010-7234-4444', 'Y', 'Y', TO_DATE('2026-07-24', 'YYYY-MM-DD'), TO_DATE('2027-07-24', 'YYYY-MM-DD'));
+
+INSERT INTO ticket_tbl_01 (tno, carno, phone, grade, tstat, startdate, enddate) 
+VALUES (6, '16가6534', '010-7234-4444', 'Y', 'Y', TO_DATE('2026-07-24', 'YYYY-MM-DD'), TO_DATE('2027-07-24', 'YYYY-MM-DD'));
+
+INSERT INTO ticket_tbl_01 (tno, carno, phone, grade, tstat, startdate, enddate) 
+VALUES (7, '17가6534', '010-7234-4444', 'Y', 'Y', TO_DATE('2026-07-24', 'YYYY-MM-DD'), TO_DATE('2027-07-24', 'YYYY-MM-DD'));
+
+INSERT INTO ticket_tbl_01 (tno, carno, phone, grade, tstat, startdate, enddate) 
+VALUES (8, '18가9534', '010-7234-4444', 'Y', 'Y', TO_DATE('2026-07-24', 'YYYY-MM-DD'), TO_DATE('2027-07-24', 'YYYY-MM-DD'));
+
+INSERT INTO ticket_tbl_01 (tno, carno, phone, grade, tstat, startdate, enddate) 
+VALUES (9, '00나6534', '010-5534-7632', 'D', 'Y', TO_DATE('2026-07-24', 'YYYY-MM-DD'), TO_DATE('2026-07-25', 'YYYY-MM-DD'));
+
+INSERT INTO ticket_tbl_01 (tno, carno, phone, grade, tstat, startdate, enddate) 
+VALUES (10, '20가6334', '010-6445-7891', 'Y', 'Y', TO_DATE('2026-09-13', 'YYYY-MM-DD'), TO_DATE('2027-09-13', 'YYYY-MM-DD'));
+
+INSERT INTO ticket_tbl_01 (tno, carno, phone, grade, tstat, startdate, enddate) 
+VALUES (11, '30다0604', '010-9233-1242', 'Y', 'Y', TO_DATE('2026-07-24', 'YYYY-MM-DD'), TO_DATE('2027-07-24', 'YYYY-MM-DD'));
+
+
+-- 2. PARK_INFO_TBL 샘플 데이터 INSERT
+INSERT INTO park_info_tbl (parkno, carno, grade, tstat, indate, outdate) 
+VALUES (1, '18가9534', 'Y', 'O', TO_DATE('2026-07-24', 'YYYY-MM-DD'), TO_DATE('2026-07-24', 'YYYY-MM-DD'));
+
+INSERT INTO park_info_tbl (parkno, carno, grade, tstat, indate, outdate) 
+VALUES (2, '18가9534', 'Y', 'I', TO_DATE('2026-07-24', 'YYYY-MM-DD'), NULL);
+
+INSERT INTO park_info_tbl (parkno, carno, grade, tstat, indate, outdate) 
+VALUES (3, '13가5534', 'M', 'I', TO_DATE('2026-07-24', 'YYYY-MM-DD'), NULL);
+
+INSERT INTO park_info_tbl (parkno, carno, grade, tstat, indate, outdate) 
+VALUES (4, '00나6534', 'D', 'I', TO_DATE('2026-07-24', 'YYYY-MM-DD'), NULL);
+
+
+
+
+
+
